@@ -1,108 +1,81 @@
 // https://medium.com/reactnative/tabbing-through-input-fields-ef283f923ab1
-
+// https://stackoverflow.com/questions/51794354/react-native-how-to-either-a-clear-a-text-input-or-b-disable-the-text-that-is
+// https://github.com/rickyansari/react-native-autofocus/blob/master/text-input.js
 import React, { Component } from 'react';
-import { TextInput, Platform, StyleSheet, Text, View } from 'react-native';
+import { 
+  Dimensions,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
+var {height, width} = Dimensions.get('window');
 type Props = {};
-const LASTINPUT = "lastInput"
+
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
-
-    this.focusNextField = this.focusNextField.bind(this);
     this.inputs = {};
     this.state={
-      value:""
-    }
-   
+      value:"",
+      PINLength:6
+    }   
   }
 
-  focusNextField(id) {
-    this.inputs[id].focus();
-  }
- 
-  
-  onChange(event){
-    this.setState({value:9})
-    Object.values(event).map((item)=>{console.log(item)})
-    console.log("onChange",event.target)    
-    console.log("ASDASD");
-  }
-  
   componentDidMount(){
-    this.focusNextField("one");
+    this.inputs['one'].focus()
+  }
+  componentDidUpdate(){
+    this.inputs['one'].focus()
+
   }
 
-  onKeyPress(event){
-    console.log("onKeyPress", Object.keys(event).toString()) 
-    console.log("ASDSA")  
+  renderSymbols(symbol, iterationCount){
+    let symbols = [];
+    let remainingWidth = (width - 60);
+    let fontSize = remainingWidth/this.state.PINLength-10;
+
+    for(let index = 0; index < this.state.PINLength ; index++){
+      let color = (index >= iterationCount) ? "white" : "blue";
+      symbols.push(
+        <Text key={index} style={{fontSize:fontSize, color:color}}> {symbol} </Text>
+      )
+    }
+    return <TouchableOpacity 
+            style={{flexDirection:"row",}}
+            onPress={()=> this.inputs['one'].focus()}>
+            {symbols}
+           </TouchableOpacity>
   }
+
+  handleOnChangeText(value){
+    this.setState({value: value}, ()=>{
+      if(this.state.value.length === this.state.PINLength){
+        alert("match the pin with stored one")
+      }
+    })
+  }
+
   renderTextInput(params) {
-    return (
-      <View style={{ height: 80, width:80}}>
-        <TextInput
-          placeholder="*"
-          blurOnSubmit={false}
-          value={this.state.value}
-          onChangeText={(value) => {
-            // if(params.refereneKey !== LASTINPUT){
-            //   this.focusNextField(params.nextField);
-            // }else{
-            //   alert("handle submit Logic")
-            // }
-          this.setState({value: value})
-
-          }}
-          onChange={(e)=>{
-             this.onChange(e);
-          }}
-          maxLength={20}
-          returnKeyType={"next"}
-          style={styles.textInput}
-          ref={input => {
-            if(params.refereneKey){
-              this.inputs[params.refereneKey] = input;
-            }
-          }}
-        />
-        <View style={{alignSelf:'center', width:40, height:1, backgroundColor:"black"}}/> 
-      </View>)
-    
-
+    return <TextInput
+            blurOnSubmit={true}
+            value={this.state.value}
+            onChangeText={(value) => this.handleOnChangeText(value)}
+            maxLength={this.state.PINLength}
+            returnKeyType={"next"}
+            style={{  height: 0, width:0,color:'transparent', fontSize:0,}}
+            ref={input => { this.inputs[params.refereneKey] = input }}
+          />
   }
   render() {
     return (
-      <View style={{width:300, height:300}}>
-         <TextInput
-          placeholder="dummy"
-          blurOnSubmit={false}
-          value={this.state.value}
-          style={{width:200, height:40}}
-        />
-        <View style={styles.outerContainer}>
-          {this.renderTextInput({nextField:"two", refereneKey:"one",})}
-          {this.renderTextInput({nextField:"three", refereneKey:"two"})}
-          {this.renderTextInput({nextField:"LASTINPUT", refereneKey:"three"})}
-          {this.renderTextInput({nextField:"", refereneKey:"LASTINPUT"})}
-        </View>
+      <View style={{width:width, height:width, justifyContent:'center', alignItems:'center'}}>
+        {this.renderTextInput({refereneKey:"one",})}
+        {this.renderSymbols("*", this.state.value.length)}
+        {this.renderSymbols("_", this.state.PINLength)}
       </View>
     );
   };
 }
-
-const styles = StyleSheet.create({
-  outerContainer: {
-    flex: 1,
-    paddingTop: 60,
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  textInput: {
-    // alignSelf: 'stretch',
-    // borderRadius: 5,
-    // borderWidth: 1,
-    height: 0,
-    paddingHorizontal: 10,
-    marginHorizontal: 20,
-  },
-});
