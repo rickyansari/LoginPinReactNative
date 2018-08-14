@@ -12,3 +12,12 @@ export default class App extends Component<{}> {
   } 
 }
 
+
+
+/*
+* https://reactnavigation.org/docs/en/deep-linking.html
+
+* TO TEST intent handling in Android 
+*  adb shell am start -W -a android.intent.action.VIEW -d "
+*  openMyApp://android/home" com.implementingloginpinfunctionality
+*/
