@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {COLORS} from 'src/config/ENV';
 
 var {height, width} = Dimensions.get('window');
 type Props = {};
@@ -70,10 +71,13 @@ export default class LoginPin extends Component<Props> {
   }
   render() {
     return (
-      <View style={{width:width, height:width, justifyContent:'center', alignItems:'center'}}>
+      <View style={{width:width, height:height, justifyContent:'center', alignItems:'center', backgroundColor:COLORS.backgroundColor}}>
+        <View style={{flex:2,  justifyContent:'center', alignItems:'center',}}>
         {this.renderTextInput({refereneKey:"one",})}
         {this.renderSymbols("*", this.state.value.length)}
         {this.renderSymbols("_", this.state.PINLength)}
+        </View>
+        <View style={{flex:1}}/>
       </View>
     );
   };

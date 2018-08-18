@@ -6,7 +6,8 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
-
+import * as Animatable from 'react-native-animatable';
+import {COLORS} from 'src/config/ENV';
 var { height, width } = Dimensions.get('window');
 type Props = {};
 
@@ -16,22 +17,22 @@ export default class Splash extends Component<Props> {
     this.state = {
       showSpinner: true,
       availableScreens:[
-        { key:"OnClickDeleteFromArray", screen:"OnClickDeleteFromArray"},
-        { key:"LoginPin", screen:"LoginPin"},
-        { key:"AsyncStorage", screen:"AsyncStorage"},
+        { key:"OnClickDeleteFromArray", screen:"OnClickDeleteFromArray", showDetails:false},
+        { key:"LoginPin", screen:"LoginPin", showDetails:false},
+        { key:"AsyncStorage", screen:"AsyncStorage", showDetails:false},
       ]
     }    
   }
 
   renderItem(item, index){
     var {navigate} = this.props.navigation;
-    console.log("navigate", navigate)
 
     return(
       <TouchableOpacity 
-        style={{marginVertical:10,}}
-        onPress={()=> { console.log(item.screen); navigate(item.screen)}}>
+        style={{flex:1,marginVertical:10, marginHorizontal:20, backgroundColor:'rgba(52, 52, 52, 0.1)'}}
+        onPress={()=> navigate(item.screen)}>
         <Text style={{alignSelf:'center', color:"#34416B"}}> {item.screen}</Text>
+        {/* <Animatable.Text animation="fadeInUp" style={{alignSelf:'center', color:"#34416B", backgroundColor:"red"}}> {item.screen}</Animatable.Text> */}
       </TouchableOpacity>
     )
   }
@@ -42,7 +43,7 @@ export default class Splash extends Component<Props> {
       <View style={{
         width:width, 
         height:height, 
-        backgroundColor:"#0d98ba" , 
+        backgroundColor: COLORS.backgroundColor , 
         alignItems:'center', 
         justifyContent:'center'}}>
         <FlatList

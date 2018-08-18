@@ -6,16 +6,14 @@ import React, { Component } from 'react';
 import {
   AsyncStorage,
   Dimensions,
-  StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
   Button,
 } from 'react-native';
 
 var {height, width} = Dimensions.get('window');
 type Props = {};
+import {COLORS} from 'src/config/ENV';
 
 export default class OnClickDeleteFromArray extends Component<Props> {
   constructor(props) {
@@ -23,18 +21,13 @@ export default class OnClickDeleteFromArray extends Component<Props> {
     this.state={
       fetchingData: true,
       data: [],
-      cachedCart:[],
-      cart:["tv", "laptop", "ac", "monitor"],
-      deletedIndex: 0
     }   
   }
 
 
   storeData = async (restaurants) => {
     try {
-     await AsyncStorage.setItem('restaurants', JSON.stringify(restaurants))
-
-     let selection = this.state.Selection;
+      await AsyncStorage.setItem('restaurants', JSON.stringify(restaurants))
     } catch (error) {
       console.log("Error", error);
     }
@@ -42,9 +35,10 @@ export default class OnClickDeleteFromArray extends Component<Props> {
 
   getData =  async()=>{
     try {
-      data = await AsyncStorage.getItem('restaurants');
+      let restaurantData = await AsyncStorage.getItem('restaurants');
+      console.log("set restaurantData", JSON.parse(restaurantData))
       if(data){
-        this.setState({fetchingData: false , data:JSON.parse(data)});
+        this.setState({fetchingData: false , data:JSON.parse(restaurantData)})
       }
     } catch(error){
        console.log(error)
@@ -52,42 +46,26 @@ export default class OnClickDeleteFromArray extends Component<Props> {
   }
   
   componentDidMount(){
-    var data ={ 
-      restaurants: [
-       {
-         name: 'MacD ',
-         time: "Morning"
-       },
-       {
-         name: 'PizzaHouse',
-         time: "Evening"
-       }
-     ]
-    }
-    this.storeData(data.restaurants);
+    data = [
+      {
+        name: 'MacD ',
+        time: "Morning"
+      },
+      {
+        name: 'PizzaHouse',
+        time: "Evening"
+      }
+    ]
+    this.storeData(data);
     this.getData();
   }
 
-  
-
-  delete(index){
-    console.log("state", this.state);
-
-    // Cloning the cart to updatedCart
-    let updatedCart = this.state.cart.slice();
-    // Removing the index element
-    updatedCart.splice(index,1);
-    
-    this.setState({deletedIndex:index, cachedCart:this.state.cart, cart: updatedCart },
-        ()=>{
-          console.log("state", this.state);
-    });
-
-}
   renderRestaurant(){
+    console.log("Data fetched");
     return this.state.data.map((item, index, restaurants) => {
+      console.log("index", index)
       return (
-        <View key={index}>
+        <View key={index} style={{backgroundColor:'black'}}>
           <Text> {item.name} </Text>
           <Text> {item.time} </Text>
           <Button 
@@ -96,7 +74,6 @@ export default class OnClickDeleteFromArray extends Component<Props> {
               let restaurantListWithoutCurrentRestaurant = restaurants.filter((restaurant)=> restaurant.name !== item.name);
               this.storeData(restaurantListWithoutCurrentRestaurant);
               this.getData();   
-              this.delete(1);    
             }}/>
         </View>
       )
@@ -105,8 +82,13 @@ export default class OnClickDeleteFromArray extends Component<Props> {
   }  
   render() {
     return (
-      <View style={{width:width, height:height, justifyContent:'center', alignItems:'center', backgroundColor:"blue"}}>
-        {this.state.fetchingData ? null : this.renderRestaurant()}
+      <View style={{
+        width:width, 
+        height:height, 
+        justifyContent:'center', 
+        alignItems:'center', 
+        backgroundColor: COLORS.backgroundColor}}>
+        {this.state.data.length ? this.renderRestaurant(): null}
       </View>
     );
   };
