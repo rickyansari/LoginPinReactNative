@@ -16,27 +16,35 @@ export default class Splash extends Component<Props> {
     this.state = {
       showSpinner: true,
       availableScreens:[
-        { key:"onClickDeleteFromArray", screen:"onClickDeleteFromArray"},
+        { key:"OnClickDeleteFromArray", screen:"OnClickDeleteFromArray"},
         { key:"LoginPin", screen:"LoginPin"},
-        { key:"AsynStorage", screen:"AsynStorage"},
+        { key:"AsyncStorage", screen:"AsyncStorage"},
       ]
     }    
   }
 
   renderItem(item, index){
     var {navigate} = this.props.navigation;
+    console.log("navigate", navigate)
+
     return(
       <TouchableOpacity 
-        onPress={()=> navigate(item.screen)}>
-        <Text> {item.screen}</Text>
+        style={{marginVertical:10,}}
+        onPress={()=> { console.log(item.screen); navigate(item.screen)}}>
+        <Text style={{alignSelf:'center', color:"#34416B"}}> {item.screen}</Text>
       </TouchableOpacity>
     )
   }
-
+  
   render() {
    
     return (
-      <View style={{width:width, height:height, backgroundColor:"blue"}}>
+      <View style={{
+        width:width, 
+        height:height, 
+        backgroundColor:"#0d98ba" , 
+        alignItems:'center', 
+        justifyContent:'center'}}>
         <FlatList
           data={this.state.availableScreens}
           renderItem={({item, index})=>this.renderItem(item, index)}

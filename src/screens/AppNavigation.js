@@ -8,6 +8,7 @@ import {
 
 import Splash from 'src/screens/Splash';
 import OnClickDeleteFromArray from 'src/screens/OnClickDeleteFromArray';
+import LoginPin from 'src/screens/LoginPin';
 
 var transitionConfig = () => ({
   transitionSpec: {
@@ -39,6 +40,7 @@ var transitionConfig = () => ({
 export default AppNavigator = 
  createStackNavigator({
    Splash: { screen: Splash },
+   LoginPin:{screen: LoginPin},
    OnClickDeleteFromArray: { screen: OnClickDeleteFromArray }
   },{
     headerMode: 'none',
