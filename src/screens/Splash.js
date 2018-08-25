@@ -22,7 +22,8 @@ export default class Splash extends Component<Props> {
         { key:"OnClickDeleteFromArray", screen:"OnClickDeleteFromArray", showDetails:false},
         { key:"LoginPin", screen:"LoginPin", showDetails:false},
         { key:"AsyncStorage", screen:"AsyncStorage", showDetails:false}, 
-        { key:"multipleButtons", screen:"multipleButtons", showDetails:false},
+        { key:"multipleButtons", screen:"multipleButtons", showDetails:false}, 
+        { key:"VerticalAlignText", screen:"VerticalAlignText", showDetails:false}, 
       ]
     }    
   }

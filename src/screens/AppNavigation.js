@@ -6,10 +6,11 @@ import {
   createStackNavigator, 
 } from 'react-navigation';
 
-import Splash from 'src/screens/Splash';
-import OnClickDeleteFromArray from 'src/screens/OnClickDeleteFromArray';
 import LoginPin from 'src/screens/LoginPin';
 import multipleButtons from 'src/screens/multipleButtons';
+import OnClickDeleteFromArray from 'src/screens/OnClickDeleteFromArray';
+import Splash from 'src/screens/Splash';
+import VerticalAlignText from 'src/screens/VerticalAlignText';
 
 var transitionConfig = () => ({
   transitionSpec: {
@@ -43,7 +44,8 @@ export default AppNavigator =
    Splash: { screen: Splash },
    LoginPin:{screen: LoginPin},
    multipleButtons:{screen: multipleButtons},
-   OnClickDeleteFromArray: { screen: OnClickDeleteFromArray }
+   OnClickDeleteFromArray: { screen: OnClickDeleteFromArray },
+   VerticalAlignText: {screen: VerticalAlignText},
   },{
     headerMode: 'none',
     navigationOptions: {
