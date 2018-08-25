@@ -1,3 +1,5 @@
+// https://github.com/oblador/react-native-animatable
+
 import React, { Component } from 'react';
 import {
   FlatList,
