@@ -5,6 +5,7 @@ import {
   View,
   Button,
 } from 'react-native';
+import {COLORS} from 'src/config/ENV';
 
 export default class multipleButtons extends Component {
 

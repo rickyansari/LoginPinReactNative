@@ -65,7 +65,7 @@ export default class OnClickDeleteFromArray extends Component<Props> {
     return this.state.data.map((item, index, restaurants) => {
       console.log("index", index)
       return (
-        <View key={index} style={{backgroundColor:'black'}}>
+        <View key={index} style={{backgroundColor:"#841584", alignItems: 'center'}}>
           <Text> {item.name} </Text>
           <Text> {item.time} </Text>
           <Button 
