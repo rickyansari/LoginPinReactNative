@@ -8,7 +8,6 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import {COLORS} from 'src/config/ENV';
 var { height, width } = Dimensions.get('window');
 type Props = {};
@@ -36,7 +35,6 @@ export default class Splash extends Component<Props> {
         style={{flex:1,marginVertical:10, marginHorizontal:20, backgroundColor:'rgba(52, 52, 52, 0.1)'}}
         onPress={()=> navigate(item.screen)}>
         <Text style={{alignSelf:'center', color:"#34416B"}}> {item.screen}</Text>
-        {/* <Animatable.Text animation="fadeInUp" style={{alignSelf:'center', color:"#34416B", backgroundColor:"red"}}> {item.screen}</Animatable.Text> */}
       </TouchableOpacity>
     )
   }

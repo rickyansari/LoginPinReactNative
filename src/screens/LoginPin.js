@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import {COLORS} from 'src/config/ENV';
+import * as Animatable from 'react-native-animatable';
 
 var {height, width} = Dimensions.get('window');
 type Props = {};
@@ -21,7 +22,8 @@ export default class LoginPin extends Component<Props> {
     this.inputs = {};
     this.state={
       value:"",
-      PINLength:6
+      PINLength:6,
+      matched: false,
     }   
   }
 
@@ -52,8 +54,11 @@ export default class LoginPin extends Component<Props> {
 
   handleOnChangeText(value){
     this.setState({value: value}, ()=>{
-      if(this.state.value.length === this.state.PINLength){
-        alert("match the pin with stored one")
+      if(this.state.value === '260791'){
+        // navigate to next scree
+        this.setState({matched: true})
+      }else{
+        this.setState({matched: false})
       }
     })
   }
@@ -72,11 +77,18 @@ export default class LoginPin extends Component<Props> {
   render() {
     return (
       <View style={{width:width, height:height, justifyContent:'center', alignItems:'center', backgroundColor:COLORS.backgroundColor}}>
-        <View style={{flex:2,  justifyContent:'center', alignItems:'center',}}>
-        {this.renderTextInput({refereneKey:"one",})}
-        {this.renderSymbols("*", this.state.value.length)}
-        {this.renderSymbols("_", this.state.PINLength)}
-        </View>
+        {this.state.value.length == 6 && !this.state.matched 
+          ? <Animatable.View animation="wobble" style={{flex:2,  justifyContent:'center', alignItems:'center'}}>
+              {this.renderTextInput({refereneKey:"one",})}
+              {this.renderSymbols("*", this.state.value.length)}
+              {this.renderSymbols("_", this.state.PINLength)}
+            </Animatable.View >
+          : <View style={{flex:2,  justifyContent:'center', alignItems:'center',}}>
+              {this.renderTextInput({refereneKey:"one",})}
+              {this.renderSymbols("*", this.state.value.length)}
+              {this.renderSymbols("_", this.state.PINLength)}
+            </View>
+        }
         <View style={{flex:1}}/>
       </View>
     );
