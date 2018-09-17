@@ -24,7 +24,7 @@ export default class LoginPin extends Component<Props> {
       value:"",
       PINLength:6,
       matched: false,
-    }   
+    }
   }
 
   componentDidMount(){
@@ -71,7 +71,7 @@ export default class LoginPin extends Component<Props> {
             maxLength={this.state.PINLength}
             returnKeyType={"next"}
             style={{  height: 0, width:0,color:'transparent', fontSize:0,}}
-            ref={input => { this.inputs[params.refereneKey] = input }}
+            ref={input => { this.inputs[params.referenceKey] = input }}
           />
   }
   render() {
@@ -79,12 +79,12 @@ export default class LoginPin extends Component<Props> {
       <View style={{width:width, height:height, justifyContent:'center', alignItems:'center', backgroundColor:COLORS.backgroundColor}}>
         {this.state.value.length == 6 && !this.state.matched 
           ? <Animatable.View animation="wobble" style={{flex:2,  justifyContent:'center', alignItems:'center'}}>
-              {this.renderTextInput({refereneKey:"one",})}
+              {this.renderTextInput({referenceKey:"one",})}
               {this.renderSymbols("*", this.state.value.length)}
               {this.renderSymbols("_", this.state.PINLength)}
             </Animatable.View >
           : <View style={{flex:2,  justifyContent:'center', alignItems:'center',}}>
-              {this.renderTextInput({refereneKey:"one",})}
+              {this.renderTextInput({referenceKey:"one",})}
               {this.renderSymbols("*", this.state.value.length)}
               {this.renderSymbols("_", this.state.PINLength)}
             </View>
@@ -94,3 +94,4 @@ export default class LoginPin extends Component<Props> {
     );
   };
 }
+
